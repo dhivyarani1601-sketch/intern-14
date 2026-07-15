@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Industrial IoT Dashboard</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#111827;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    width:420px;
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.3);
+}
+
+h2{
+    text-align:center;
+    color:#1D4ED8;
+    margin-bottom:20px;
+}
+
+.card{
+    background:#F3F4F6;
+    padding:15px;
+    margin:12px 0;
+    border-radius:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.label{
+    font-weight:bold;
+}
+
+.value{
+    color:#2563EB;
+    font-weight:bold;
+}
+
+.status{
+    margin-top:20px;
+    padding:15px;
+    border-radius:10px;
+    text-align:center;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    background:#16A34A;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:20px;
+    border:none;
+    border-radius:8px;
+    background:#2563EB;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1E40AF;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🏭 Industrial IoT Dashboard</h2>
+
+<div class="card">
+    <span class="label">🌡 Machine Temperature</span>
+    <span class="value" id="temperature">65 °C</span>
+</div>
+
+<div class="card">
+    <span class="label">📳 Vibration Level</span>
+    <span class="value" id="vibration">2.5 mm/s</span>
+</div>
+
+<div class="card">
+    <span class="label">⚙ Machine Status</span>
+    <span class="value" id="machineStatus">Running</span>
+</div>
+
+<div class="status" id="alert">
+    ✅ Machine Operating Normally
+</div>
+
+<button onclick="updateMachine()">
+Refresh Machine Data
+</button>
+
+</div>
+
+
+<script>
+
+function updateMachine(){
+
+    // Demo sensor values
+    let temp = Math.floor(40 + Math.random()*80);
+    let vibration = (Math.random()*8).toFixed(2);
+
+    document.getElementById("temperature").innerHTML =
+        temp + " °C";
+
+    document.getElementById("vibration").innerHTML =
+        vibration + " mm/s";
+
+
+    let status = "Running";
+    let message = "✅ Machine Operating Normally";
+    let color = "#16A34A";
+
+
+    if(temp > 90 || vibration > 6){
+
+        status = "Warning";
+        message = "⚠ Maintenance Required";
+        color = "#F59E0B";
+
+    }
+
+
+    if(temp > 110 || vibration > 8){
+
+        status = "Critical";
+        message = "🚨 Machine Fault Detected";
+        color = "#DC2626";
+
+    }
+
+
+    document.getElementById("machineStatus").innerHTML =
+        status;
+
+    let alert = document.getElementById("alert");
+    alert.innerHTML = message;
+    alert.style.background = color;
+
+}
+
+</script>
+
+</body>
+</html>
